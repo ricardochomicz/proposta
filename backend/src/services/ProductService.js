@@ -6,6 +6,16 @@ class ProductService {
     return await productRepository.findAll()
   }
 
+  /**
+   * @typedef {Object} ProductDTO
+   * @property {string} operator
+   * @property {string} description
+   * @property {number} price
+   */
+
+  /**
+   * @param {ProductDTO} productData
+   */
   async create(productData) {
     const { operator, description, price } = productData
     if (!operator || !description || price == null) {

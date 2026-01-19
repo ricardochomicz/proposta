@@ -8,6 +8,7 @@ import {
 } from './productService'
 import type { Product } from './types'
 import { toast } from '../services/ToastService'
+import { formatPrice, getNumericPrice } from '../utils/formatMoney'
 
 export function ProductsSection() {
   const [products, setProducts] = useState<Product[]>([])
@@ -35,29 +36,6 @@ export function ProductsSection() {
   useEffect(() => {
     loadProducts()
   }, [])
-
-  const formatPrice = (value: string) => {
-    const numbers = value.replace(/\D/g, '')
-
-    if (!numbers) return ''
-
-    const numericValue = Number(numbers) / 100
-
-    if (Number.isNaN(numericValue)) return ''
-
-    return numericValue.toLocaleString('pt-BR', {
-      style: 'currency',
-      currency: 'BRL',
-    })
-  }
-
-  const getNumericPrice = (value: string) => {
-    const numbers = value.replace(/\D/g, '')
-
-    if (!numbers) return Number.NaN
-
-    return Number(numbers) / 100
-  }
 
   const handlePriceChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value
