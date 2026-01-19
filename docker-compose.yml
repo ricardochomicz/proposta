@@ -1,0 +1,27 @@
+services:
+  backend:
+    build:
+      context: ./backend
+    container_name: proposta-backend
+    working_dir: /app
+    command: npm run dev
+    ports:
+      - '3001:3001'
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+      - ./backend/database.sqlite:/app/database.sqlite
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: proposta-frontend
+    working_dir: /app
+    command: npm run dev -- --host 0.0.0.0 --port 5173
+    ports:
+      - '5173:5173'
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
