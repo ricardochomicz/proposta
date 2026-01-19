@@ -27,8 +27,6 @@ export function ProductsSection() {
 
       const data = await listProducts()
       setProducts(data)
-    } catch {
-      toast.error('Não foi possível carregar os produtos')
     } finally {
       setLoading(false)
     }
@@ -96,15 +94,13 @@ export function ProductsSection() {
       setLoading(true)
       await deleteProduct(productToDelete.id)
       setProducts((previous) =>
-        previous.filter((product) => product.id !== productToDelete.id)
+        previous.filter((product) => product.id !== productToDelete.id),
       )
       toast.success('Produto excluído com sucesso')
 
       if (editingId === productToDelete.id) {
         handleCancel()
       }
-    } catch {
-      toast.error('Não foi possível excluir o produto')
     } finally {
       setLoading(false)
       setProductToDelete(null)
@@ -138,8 +134,8 @@ export function ProductsSection() {
 
         setProducts((previous) =>
           previous.map((product) =>
-            product.id === update.id ? update : product
-          )
+            product.id === update.id ? update : product,
+          ),
         )
         toast.success('Produto atualizado com sucesso')
         handleCancel()
@@ -155,8 +151,6 @@ export function ProductsSection() {
         setDescription('')
         setPrice('')
       }
-    } catch {
-      toast.error('Não foi possível criar o produto')
     } finally {
       setLoading(false)
     }

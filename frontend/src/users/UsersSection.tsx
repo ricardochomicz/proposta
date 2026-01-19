@@ -21,8 +21,6 @@ export function UsersSection() {
 
       const data = await listUsers()
       setUsers(data)
-    } catch {
-      toast.error('Não foi possível carregar os usuários')
     } finally {
       setLoading(false)
     }
@@ -43,7 +41,7 @@ export function UsersSection() {
 
     return `${numbers.slice(0, 2)} ${numbers.slice(2, 3)} ${numbers.slice(
       3,
-      7
+      7,
     )}-${numbers.slice(7, 11)}`
   }
 
@@ -83,15 +81,13 @@ export function UsersSection() {
       setLoading(true)
       await deleteUser(userToDelete.id)
       setUsers((previous) =>
-        previous.filter((user) => user.id !== userToDelete.id)
+        previous.filter((user) => user.id !== userToDelete.id),
       )
       toast.success('Usuário excluído com sucesso')
 
       if (editingId === userToDelete.id) {
         handleCancelEdit()
       }
-    } catch {
-      toast.error('Não foi possível excluir o usuário')
     } finally {
       setLoading(false)
       setUserToDelete(null)
@@ -118,7 +114,7 @@ export function UsersSection() {
         })
 
         setUsers((previous) =>
-          previous.map((u) => (u.id === editingId ? updated : u))
+          previous.map((u) => (u.id === editingId ? updated : u)),
         )
         toast.success('Usuário atualizado com sucesso')
         handleCancelEdit()
@@ -137,12 +133,6 @@ export function UsersSection() {
         setPhone('')
         setOffice('')
       }
-    } catch {
-      toast.error(
-        editingId
-          ? 'Erro ao atualizar usuário'
-          : 'Não foi possível criar o usuário'
-      )
     } finally {
       setLoading(false)
     }

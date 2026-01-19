@@ -55,20 +55,14 @@ export function ProposalsSection() {
 
       if (usersResult.status === 'fulfilled') {
         setUsers(usersResult.value)
-      } else {
-        toast.error('Não foi possível carregar os usuários')
       }
 
       if (productsResult.status === 'fulfilled') {
         setProducts(productsResult.value)
-      } else {
-        toast.error('Não foi possível carregar os produtos')
       }
 
       if (proposalsResult.status === 'fulfilled') {
         setProposals(proposalsResult.value)
-      } else {
-        toast.error('Não foi possível carregar as propostas')
       }
     } finally {
       setLoading(false)
@@ -303,8 +297,6 @@ export function ProposalsSection() {
           unitPrice: item.unitPrice,
         })),
       )
-    } catch {
-      toast.error('Não foi possível carregar os itens da proposta para edição')
     } finally {
       setLoading(false)
     }
@@ -366,8 +358,6 @@ export function ProposalsSection() {
         previous.filter((proposal) => proposal.id !== proposalToDelete.id),
       )
       toast.success('Proposta excluída com sucesso')
-    } catch {
-      toast.error('Não foi possível excluir a proposta')
     } finally {
       setLoading(false)
       setProposalToDelete(null)
@@ -387,7 +377,7 @@ export function ProposalsSection() {
     try {
       proposalItems = await listProposalItems(proposal.id)
     } catch {
-      toast.error('Não foi possível carregar os itens da proposta')
+      // Itens vazios em caso de erro (já notificado pelo interceptor)
     }
 
     const doc = printWindow.document
@@ -545,10 +535,13 @@ export function ProposalsSection() {
         },
       )}*`
       const message = ['```', ...lines, '```', '', totalBold].join('\n')
-      await navigator.clipboard.writeText(message)
-      toast.success('Cupom copiado para a área de transferência')
-    } catch {
-      toast.error('Não foi possível copiar o cupom')
+
+      try {
+        await navigator.clipboard.writeText(message)
+        toast.success('Cupom copiado para a área de transferência')
+      } catch {
+        toast.error('Não foi possível copiar o cupom')
+      }
     } finally {
       setLoading(false)
     }
@@ -614,12 +607,6 @@ export function ProposalsSection() {
       }
 
       resetForm()
-    } catch {
-      toast.error(
-        editingProposalId
-          ? 'Não foi possível atualizar a proposta'
-          : 'Não foi possível criar a proposta',
-      )
     } finally {
       setLoading(false)
     }
