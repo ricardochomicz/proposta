@@ -1,36 +1,131 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Sistema de Gestão de Propostas
 
-## Getting Started
+Este projeto é um sistema completo para gerenciamento de propostas, produtos e usuários, desenvolvido com uma arquitetura moderna separada em **Frontend** e **Backend**.
 
-First, run the development server:
+## 🚀 Tecnologias Utilizadas
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+### Frontend
+
+- **React 19** (com Vite)
+- **TypeScript** para tipagem estática e segurança
+- **Bootstrap 5** para estilização e componentes de UI
+- **Axios** para comunicação com a API
+- **React Hooks** para gerenciamento de estado
+
+### Backend
+
+- **Node.js** com **Express 5**
+- **SQLite3** como banco de dados (leve e sem necessidade de configuração complexa)
+- **Arquitetura em Camadas** (Controllers, Services, Repositories)
+- **ES Modules** (import/export)
+
+### Infraestrutura
+
+- **Docker** e **Docker Compose** para orquestração dos ambientes
+
+---
+
+## 📂 Estrutura do Projeto
+
+O projeto está organizado em dois diretórios principais:
+
+```
+/
+├── backend/            # API RESTful
+│   ├── src/
+│   │   ├── controllers/ # Controladores das rotas (Users, Products, Proposals)
+│   │   ├── services/    # Regras de negócio
+│   │   ├── repositories/# Acesso ao banco de dados
+│   │   └── database/    # Configuração do SQLite
+│   ├── database.sqlite  # Arquivo do banco de dados
+│   └── index.js         # Ponto de entrada da API
+│
+├── frontend/           # Aplicação Web React
+│   ├── src/
+│   │   ├── components/  # Componentes reutilizáveis (ex: Toast)
+│   │   ├── services/    # Configuração da API e serviços
+│   │   ├── users/       # Módulo de Usuários
+│   │   ├── products/    # Módulo de Produtos
+│   │   └── proposals/   # Módulo de Propostas
+│   └── vite.config.ts   # Configuração do Vite
+│
+└── docker-compose.yml   # Orquestração dos containers
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🛠️ Como Executar
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Você pode rodar o projeto de duas formas: usando **Docker** (recomendado) ou **manualmente**.
 
-## Learn More
+### Opção 1: Usando Docker (Recomendado)
 
-To learn more about Next.js, take a look at the following resources:
+Certifique-se de ter o Docker e o Docker Compose instalados.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Na raiz do projeto, execute:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+   ```bash
+   docker-compose up --build
+   ```
 
-## Deploy on Vercel
+2. Acesse a aplicação:
+   - **Frontend:** http://localhost:5173
+   - **Backend (API):** http://localhost:3001
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Opção 2: Manualmente
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+#### 1. Configurando o Backend
+
+```bash
+cd backend
+npm install
+npm run dev
+```
+
+O servidor iniciará em `http://localhost:3001`.
+
+#### 2. Configurando o Frontend
+
+Em um novo terminal:
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+A aplicação abrirá em `http://localhost:5173`.
+
+---
+
+## ✨ Funcionalidades
+
+### 1. Gestão de Usuários
+
+- Listagem de usuários cadastrados.
+- Cadastro de novos usuários (Nome, Email, Telefone).
+- Visualização de detalhes.
+
+### 2. Gestão de Produtos
+
+- Catálogo de produtos disponíveis.
+- Adição de novos produtos com nome e valor.
+- Exclusão de produtos.
+
+### 3. Gestão de Propostas
+
+- Criação e acompanhamento de propostas comerciais.
+- Associação de produtos e usuários às propostas.
+
+---
+
+## 🔧 Detalhes Técnicos
+
+- **Tratamento de Erros:** O frontend possui um sistema centralizado de tratamento de erros via interceptors do Axios, exibindo notificações amigáveis (Toasts) ao usuário em caso de falhas na API.
+- **Persistência:** Os dados são salvos localmente no arquivo `backend/database.sqlite`. Para resetar o banco, basta deletar este arquivo e reiniciar o backend (as tabelas serão recriadas automaticamente).
+
+---
+
+## 📝 Licença
+
+Este projeto é de uso livre para fins de estudo e desenvolvimento.
